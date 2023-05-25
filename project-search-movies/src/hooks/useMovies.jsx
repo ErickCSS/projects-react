@@ -4,10 +4,11 @@ import { useState } from 'react'
 
 export function useMovies({ search }) {
   const [responseMovies, setResponseMovies] = useState([])
-  const { Search: movies} = resultsMovies
+  const { Search: movies} = responseMovies
 
+  console.log(responseMovies)
   // Mapeo de los datos de la API
-  const MappedMovies = movies.map(movie => ({
+  const MappedMovies = movies?.map(movie => ({
     id: movie.imdbID,
     title: movie.Title,
     year: movie.Year,
