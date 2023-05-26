@@ -1,27 +1,18 @@
-import resultsMovies from '../mockup/resultsApi.json'
-import noResults from '../mockup/noResults.json'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { searchMovies } from '../services/movies'
 
 export function useMovies({ search }) {
-  const [responseMovies, setResponseMovies] = useState([])
-  const { Search: movies} = responseMovies
+  const [movies, setMovies] = useState([])
+  const previousMovies = useRef(search)
 
-  console.log(responseMovies)
-  // Mapeo de los datos de la API
-  const MappedMovies = movies?.map(movie => ({
-    id: movie.imdbID,
-    title: movie.Title,
-    year: movie.Year,
-    poster: movie.Poster
-  }))
+  const getMovies = async () => {
+    if (previousMovies.current === search) return
 
-  const getMovies = () => {
-    if (search) {
-      setResponseMovies(resultsMovies)
-    } else {
-      setResponseMovies(noResults)
-    }
+
+    previousMovies.current = search
+    const { MappedMovies } = await searchMovies({ search })
+    setMovies(MappedMovies)
   }
 
-  return { movies: MappedMovies, getMovies}
+  return { movies, getMovies}
 }

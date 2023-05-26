@@ -16,6 +16,7 @@ header form input {
 
 main {
   margin-top: 2em;
+  text-align: center;
 }
 main div {
   display: grid;

@@ -26,6 +26,8 @@ export function useSearch() {
       setError('Ingrese al menos 3 caracteres')
       return
     }
+
+    setError(null)
   }, [search])
 
   return { search, setSearch, error}
